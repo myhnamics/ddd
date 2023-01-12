@@ -1,10 +1,11 @@
-# 교재 countdown 예제
-# for countdown in 5,4,3,2,1,'hey!':
-#     print(countdown)
-# print('프로그램 종료')
+subjects= { '진동공학':'A+','열전달':'A+', '기계설계':'A0'}
+subject = '진동공학'
+student = 'kim'
+print(subjects[subject])
 
-countdown_list = [5,4,3,2,1,'hey!']
-for countdown in countdown_list :
-     print(countdown)
-print(countdown_list[-3])
-print('프로그램 종료')
+# old style
+print('%s 학생의 %s 과목 성적은 %s'%(student, subject, subjects[subject]))
+# modern style
+print('{0} 학생의 {1} 과목 성적은 {2}입니다.'.format(student, subject, subjects[subject]))
+# ultra modern style
+print(f'{student} {subject} subject grade is {subjects[subject]} ')
