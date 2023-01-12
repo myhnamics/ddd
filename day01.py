@@ -1,11 +1,6 @@
-subjects= { '진동공학':'A+','열전달':'A+', '기계설계':'A0'}
-subject = '진동공학'
-student = 'kim'
-print(subjects[subject])
+import tkinter as tk
 
-# old style
-print('%s 학생의 %s 과목 성적은 %s'%(student, subject, subjects[subject]))
-# modern style
-print('{0} 학생의 {1} 과목 성적은 {2}입니다.'.format(student, subject, subjects[subject]))
-# ultra modern style
-print(f'{student} {subject} subject grade is {subjects[subject]} ')
+win= tk.Tk()
+win.geometry('400x300')
+win.title('파이썬 1일자 Prview')
+win.mainloop()
