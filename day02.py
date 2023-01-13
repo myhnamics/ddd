@@ -1,3 +1,2 @@
-harry_potter = {'헤르미온느': '그리핀도르','말포이':'슬리데린','말포이':'그리핀도르'}
-print(harry_potter)
-print(type(harry_potter))
+PI = 3.14
+print(f'원주율은 {PI}이고 타입은 {type(PI)}다.')
