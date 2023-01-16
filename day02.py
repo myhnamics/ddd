@@ -1,9 +1,24 @@
-# math_values = (3.14,2.71)
-# print(f'원주율은 {math_values[0]}이고 타입은 {type(math_values)}다.')
-# math_values[0] = 9.99
-# print(f'원주율은 {math_values[0]}이고 타입은 {type(math_values)}다.')
+# number = 0x9A
+# print(number)
+# number = 0o232
+# print(number)
+#
+# print(bin(number))
+# print(hex(number))
+# print(oct(number))
 
-math_values = [3.14,2.71]
-print(f'원주율은 {math_values[0]}이고 타입은 {type(math_values)}다.')
-math_values[0] = 9.99
-print(f'원주율은 {math_values[0]}이고 타입은 {type(math_values)}다.')
+int('10',2) #binary
+int('10',22) #chester..
+
+vowels = 'aeiou'
+letter = 'u'
+if letter in vowels:
+    print(letter,'is a bowel')
+
+tweet_string = "blah" * 50
+tweet_limit = 20
+diff = tweet_limit - len(tweet_string)
+if diff >= 0:
+    print(tweet_string)
+else:
+    print('went over by',abs(diff))
