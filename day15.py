@@ -1,42 +1,66 @@
-## 함수 선언 부분 ##
-def new_pokemon(idx, pokemon):
-    if idx < 0 or idx > len(pokemons):
-        print("데이터를 삽입할 범위를 벗어났습니다.")
+class Node():
+    def __init__(self):
+        self.data = None
+        self.link = None
+#
+# node1 = Node()
+# node1.data = "다현"
+#
+# node2 = Node()
+# node2.data = "정연"
+# node1.link = node2
+#
+# node3 = Node()
+# node3.data = "즈위"
+# node2.link = node3
+#
+# node4 = Node()
+# node4.data = "사나"
+# node3.link = node4
+#
+# node5 = Node()
+# node5.data = "지효"
+# node4.link = node5
+#
+# current = node1
+#
+# newNode = Node()
+# newNode.data = "아린"
+# newNode.link = node2.link
+# node2.link = newNode
+#
+# newNode.link = node3.link
+# del(node3)
+#
+# while current.link != None:
+#     current = current.link
+#     print(current.data)
+
+def printNodes(start):
+    current = start
+    if current == None:
         return
+    print(current.data, end=' ')
+    while current.link !=None :
+        current = current.link
+        print(current.data, end=' ')
+    print()
+memory = []
+head, current, pre = None, None, None
+dataArray = ["다현","정연", "쯔위","사나","지효"]
 
-    pokemons.append(None)  # 빈칸 추가
-    len_pokemon = len(pokemons)  # 배열의 현재 크기
+if __name__== "__main__":
 
-    for i in range(len_pokemon - 1, idx, -1):
-        pokemons[i] = pokemons[i - 1]
-        pokemons[i - 1] = None
+    node = Node()
+    node.data = dataArray[0]
+    head = node
+    memory.append(node)
 
-    pokemons[idx] = pokemon  # 지정한 위치에 친구 추가
+    for data in dataArray[1:]:
+        pre = node
+        node = Node()
+        node.data = data
+        pre.link = node
+        memory.append(node)
 
-
-def find_insert(pokemon,lv):
-    find_pos = -1
-    for i in range(len(pokemons)):
-        if lv >= pokemons[i][1]:
-            find_pos = i
-            break
-    if find_pos == -1:
-        find_pos == len(pokemons)
-    new_pokemon(find_pos,(pokemon,lv))
-
-
-
-
-## 전역 변수 선언 부분 ##
-pokemons = [("파이리",20), ("피카츄",18), ("망냐뇽",9), ("찌르꼬",5),("이상해씨",3)]
-
-## 메인 코드 부분 ##
-if __name__=="__main__":
-
-    while True:
-        data = input("추가할 친구-->")
-        count = int(input("레벨 -->"))
-        find_insert(data,count)
-        print(pokemons)
-
-
+    printNodes(head)
