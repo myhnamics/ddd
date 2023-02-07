@@ -1,60 +1,58 @@
-class tree_node():
+## 함수 선언 부분 ##
+class TreeNode():
     def __init__(self):
         self.left = None
         self.data = None
         self.right = None
 
-node1 = tree_node()
-node1.data = "가"
 
-node2 = tree_node()
-node2.data = "나"
-node1.left = node2
+## 전역 변수 선언 부분 ##
+memory = []
+root = None
+nameAry = ['블랙핑크', '레드벨벳', '마마무', '에이핑크', '걸스데이', '트와이스']
 
-node3 = tree_node()
-node3.data = "다"
-node1.right = node3
+## 메인 코드 부분 ##
+node = TreeNode()
+node.data = nameAry[0]
+root = node
+memory.append(node)
 
-node4 = tree_node()
-node4.data = "라"
-node2.left = node4
+for name in nameAry[1:]:
 
-node5 = tree_node()
-node5.data = "마"
-node2.right = node5
+    node = TreeNode()
+    node.data = name
 
-node6 = tree_node()
-node6.data = "바"
-node3.left = node6
+    current = root
+    while True:
+        if name < current.data:
+            if current.left == None:
+                current.left = node
+                break
+            current = current.left
+        else:
+            if current.right == None:
+                current.right = node
+                break
+            current = current.right
 
-def preorder(node):     #재귀함수
-    if node == None:
-        return
-    print(node.data,end = '->')
-    preorder(node.left)
-    preorder(node.right)
+    memory.append(node)
 
-def inorder(node):
-    if node == None:
-        return
-    inorder(node.left)
-    print(node.data,end = '->')
-    inorder(node.right)
+findName = '트와이스'
+# 탐색 트리 탐색
+current = root
+while True:
+    if findName == current.data:
+        print(findName, '을(를) 찾음.')
+        break
+    elif findName < current.data:
+        if current.left == None:
+            print(findName, '이(가) 트리에 없음')
+            break
+        current = current.left
+    else:
+        if current.right == None:
+            print(findName, '이(가) 트리에 없음')
+            break
+        current = current.right
 
-def postorder(node):
-    if node == None:
-        return
-    postorder(node.left)
-    postorder(node.right)
-    print(node.data,end = '->')
-
-print('preorder')
-preorder(node1)
-print('end')
-print('inorder')
-inorder(node1)
-print('end')
-
-print('postorder')
-postorder(node1)
-print('end')
+# 탐색 트리 삭제
