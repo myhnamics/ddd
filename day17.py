@@ -1,82 +1,72 @@
-## 함수 선언 부분 ##
-def isStackFull():
-    global SIZE, stack, top
-    if (top >= SIZE - 1):
+def is_queue_full():
+    global size, queue, front, rear
+    if rear != size-1:
+        return False
+    elif rear == size-1 and front == -1:
         return True
     else:
+        for i in range(front+1,size):
+            queue[i-1] = queue[i]
+            queue[i] = None
+        front -= 1
+        rear -= 1
         return False
 
-
-def isStackEmpty():
-    global SIZE, stack, top
-    if (top == -1):
-        return True
-    else:
-        return False
-
-
-def push(data):
-    global SIZE, stack, top
-    if (isStackFull()):
-        print("스택이 꽉 찼습니다.")
+def en_queue(data):
+    global size,queue,front,rear
+    if(is_queue_full()):
+        print("큐가 꽉참")
         return
-    top += 1
-    stack[top] = data
+    rear += 1
+    queue[rear] = data
 
+def is_queue_empty():
+    global size,queue,front,rear
+    if(front == rear):
+        return True
+    else:
+        return False
 
-def pop():
-    global SIZE, stack, top
-    if (isStackEmpty()):
-        print("스택이 비었습니다.")
-        return None
-    data = stack[top]
-    stack[top] = None
-    top -= 1
-    return data
-
+def de_queue():
+    global size,queue,front,rear
+    if(is_queue_empty()):
+        "큐가 비엇어"
+        return
+    front +=1
+    data = queue[front]
+    queue[front] = None
+    return
 
 def peek():
-    global SIZE, stack, top
-    if (isStackEmpty()):
-        print("스택이 비었습니다.")
+    global size,queue,front,rear
+    if is_queue_empty():
+        print("큐가 비어잇어")
         return None
-    return stack[top]
+    return queue[front+1]
 
+size = 5
+queue = [None for _ in range(0,size)]
+front = rear = -1
 
-def checkBracket(expr):
-    for ch in expr:
-        if ch in '([{<':
-            push(ch)
-        elif ch in ')]}>':
-            out = pop()
-            if ch == ')' and out == '(':
-                pass
-            elif ch == ']' and out == '[':
-                pass
-            elif ch == '}' and out == '{':
-                pass
-            elif ch == '>' and out == '<':
-                pass
-            else:
-                return False
-        else:
-            pass
-    if isStackEmpty():
-        return True
-    else:
-        return False
+rear += 1
+queue[rear] = '메타몽'
+rear += 1
+queue[rear] = '꼬부기'
+rear += 1
+queue[rear] = '모부기'
 
+front += 1
+data = queue[front]
+queue[front] = None
+front += 1
+data = queue[front]
+queue[front] = None
+en_queue("피카류")
+en_queue("피류")
 
-## 전역 변수 선언 부분 ##
-SIZE = 100
-stack = [None for _ in range(SIZE)]
-top = -1
-
-## 메인 코드 부분 ##
-if __name__ == "__main__":
-
-    exprAry = ['(A+B)', ')A+B(', '((A+B)-C', '(A+B]', '(<A+{B-C}/[C*D]>)']
-
-    for expr in exprAry:
-        top = -1
-        print(expr, '==>', checkBracket(expr))
+print('출구')
+for i in range(0,len(queue)):
+    print(queue[i])
+size = len(queue)
+en_queue("vlfb")
+print(queue)
