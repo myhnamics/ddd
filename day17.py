@@ -1,72 +1,60 @@
-def is_queue_full():
-    global size, queue, front, rear
-    if rear != size-1:
-        return False
-    elif rear == size-1 and front == -1:
-        return True
-    else:
-        for i in range(front+1,size):
-            queue[i-1] = queue[i]
-            queue[i] = None
-        front -= 1
-        rear -= 1
-        return False
+class tree_node():
+    def __init__(self):
+        self.left = None
+        self.data = None
+        self.right = None
 
-def en_queue(data):
-    global size,queue,front,rear
-    if(is_queue_full()):
-        print("큐가 꽉참")
+node1 = tree_node()
+node1.data = "가"
+
+node2 = tree_node()
+node2.data = "나"
+node1.left = node2
+
+node3 = tree_node()
+node3.data = "다"
+node1.right = node3
+
+node4 = tree_node()
+node4.data = "라"
+node2.left = node4
+
+node5 = tree_node()
+node5.data = "마"
+node2.right = node5
+
+node6 = tree_node()
+node6.data = "바"
+node3.left = node6
+
+def preorder(node):     #재귀함수
+    if node == None:
         return
-    rear += 1
-    queue[rear] = data
+    print(node.data,end = '->')
+    preorder(node.left)
+    preorder(node.right)
 
-def is_queue_empty():
-    global size,queue,front,rear
-    if(front == rear):
-        return True
-    else:
-        return False
-
-def de_queue():
-    global size,queue,front,rear
-    if(is_queue_empty()):
-        "큐가 비엇어"
+def inorder(node):
+    if node == None:
         return
-    front +=1
-    data = queue[front]
-    queue[front] = None
-    return
+    inorder(node.left)
+    print(node.data,end = '->')
+    inorder(node.right)
 
-def peek():
-    global size,queue,front,rear
-    if is_queue_empty():
-        print("큐가 비어잇어")
-        return None
-    return queue[front+1]
+def postorder(node):
+    if node == None:
+        return
+    postorder(node.left)
+    postorder(node.right)
+    print(node.data,end = '->')
 
-size = 5
-queue = [None for _ in range(0,size)]
-front = rear = -1
+print('preorder')
+preorder(node1)
+print('end')
+print('inorder')
+inorder(node1)
+print('end')
 
-rear += 1
-queue[rear] = '메타몽'
-rear += 1
-queue[rear] = '꼬부기'
-rear += 1
-queue[rear] = '모부기'
-
-front += 1
-data = queue[front]
-queue[front] = None
-front += 1
-data = queue[front]
-queue[front] = None
-en_queue("피카류")
-en_queue("피류")
-
-print('출구')
-for i in range(0,len(queue)):
-    print(queue[i])
-size = len(queue)
-en_queue("vlfb")
-print(queue)
+print('postorder')
+postorder(node1)
+print('end')
