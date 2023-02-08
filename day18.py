@@ -22,7 +22,8 @@ def printGraph(g):
 G1 = None
 nameAry = ['문별', '솔라', '휘인', '쯔위', '선미', '화사']
 문별, 솔라, 휘인, 쯔위, 선미, 화사 = 0, 1, 2, 3, 4, 5
-
+stack = []
+visit = []
 ## 메인 코드 부분 ##
 gSize = 6
 G1 = Graph(gSize)
@@ -35,5 +36,31 @@ G1.graph[화사][쯔위] = 1; G1.graph[화사][선미] = 1
 
 print('## G1 무방향 그래프 ##')
 printGraph(G1)
+
+current = 0
+stack.append(current)
+visit.append(current)
+
+while (len(stack) != 0):
+    next = None
+    for vertex in range(len(nameAry)):
+        if G1.graph[current][vertex] == 1:
+            if vertex in visit:
+                pass
+            else:
+                next = vertex
+                break
+    if next != None:
+        current = next
+        stack.append(current)
+        visit.append(current)
+    else:
+        current = stack.pop()
+
+print('방문순서 -->', end=' ')
+
+for i in visit:
+    print(nameAry[i], end=' ')
+
 
 
