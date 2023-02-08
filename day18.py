@@ -1,9 +1,20 @@
-gSize = 6
 class Graph():
     def __init__(self, size):
         self.SIZE = size
         self.graph = [[0 for _ in range(size)] for _ in range(size)]
 
+
+def printGraph(g):
+    print(' ', end=' ')
+    for v in range(g.SIZE):
+        print(nameAry[v], end=' ')
+    print()
+    for row in range(g.SIZE):
+        print(nameAry[row], end=' ')
+        for col in range(g.SIZE):
+            print(g.graph[row][col], end='  ')
+        print()
+    print()
 
 def findVertex(g, findVtx):
     stack = []
@@ -15,7 +26,7 @@ def findVertex(g, findVtx):
 
     while (len(stack) != 0):
         next = None
-        for vertex in range(gSize):
+        for vertex in range(gsize):
             if g.graph[current][vertex] != 0:
                 if vertex in visitedAry:  # 방문한 적이 있는 정점이면 탈락
                     pass
@@ -35,18 +46,53 @@ def findVertex(g, findVtx):
     else:
         return False
 
-G1 = None
-nameAry = ['문별', '솔라', '휘인', '쯔위', '선미', '화사']
-문별, 솔라, 휘인, 쯔위, 선미, 화사 = 0, 1, 2, 3, 4, 5
-stack = []
-visit = []
-gSize = 6
-G1 = Graph(gSize)
-G1.graph[문별][솔라] = 1; G1.graph[문별][휘인] = 1
-G1.graph[솔라][문별] = 1; G1.graph[솔라][쯔위] = 1
-G1.graph[휘인][문별] = 1; G1.graph[휘인][쯔위] = 1
-G1.graph[쯔위][솔라] = 1; G1.graph[쯔위][휘인] = 1; G1.graph[쯔위][선미] = 1; G1.graph[쯔위][화사] = 1
-G1.graph[선미][쯔위] = 1; G1.graph[선미][화사] = 1
-G1.graph[화사][쯔위] = 1; G1.graph[화사][선미] = 1
+nameAry = ['춘천', '서울', '속초', '대전', '광주', '부산' ]
+춘천, 서울, 속초, 대전, 광주, 부산 = 0, 1, 2, 3, 4, 5
 
-print (findVertex(G1,화사))
+gsize = 6
+G1 = Graph(gsize)
+G1.graph[춘천][서울] = 10; G1.graph[춘천][속초] = 15
+G1.graph[서울][춘천] = 10; G1.graph[서울][속초] = 40; G1.graph[서울][대전] = 11; G1.graph[서울][광주] = 50
+G1.graph[속초][춘천] = 15; G1.graph[속초][서울] = 40; G1.graph[속초][대전] = 12
+G1.graph[대전][서울] = 11; G1.graph[대전][속초] = 12; G1.graph[대전][광주] = 20; G1.graph[대전][부산] = 30
+G1.graph[광주][서울] = 50; G1.graph[광주][대전] = 20; G1.graph[광주][부산] = 25
+G1.graph[부산][대전] = 30; G1.graph[부산][광주] = 25
+
+print('전체 연결도')
+printGraph(G1)
+
+edge_array = []
+for i in range(gsize):
+    for k in range(gsize):
+        if G1.graph[i][k] != 0:
+            edge_array.append([G1.graph[i][k], i, k])
+
+from operator import itemgetter
+edge_array = sorted(edge_array, key = itemgetter(0), reverse=True)
+
+new_array = []
+for i in range(0, len(edge_array), 2):
+    new_array.append(edge_array[i])
+
+index = 0
+print(edge_array)
+print(new_array)
+while (len(new_array)) > (gsize-1):
+    start = new_array[index][1]
+    end = new_array[index][2]
+    save_cost = new_array[index][0]
+
+    G1.graph[start][end] = 0
+    G1.graph[end][start] = 0
+
+    start_connect = findVertex(G1, start)
+    end_connect = findVertex(G1,end)
+
+    if start_connect and end_connect:
+        del(new_array[index])
+    else:
+        G1.graph[start][end] = save_cost
+        G1.graph[end][start] = save_cost
+        index += 1
+print('최소비용 자전거 도로')
+printGraph(G1)
