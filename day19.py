@@ -1,58 +1,67 @@
-# BFS
-from collections import deque
+memos = [None for _ in range(100)]
+memos[0] = 0
+memos[1] = 1
+
+count_memo_recu = 0
+def fibo_memo_recu(n):
+    global memos, count_memo_recu
+    count_memo_recu += 1
+    if n <= 1:
+        return memos[n]
+
+    if memos[n] is not None:
+        return memos[n]
+
+    memos[n] = fibo_memo_recu(n-2) + fibo_memo_recu(n-1)
+    return memos[n]
 
 
-class Graph:
-    def __init__(self, size):
-        self.SIZE = size
-        self.graph = [[0 for x in range(size)] for x in range(size)]
+
+memo = list() # 전역 변수로 한 번 처리한 결과 값을 저장
+def fibo_memo(n):
+    global memo
+    memo = [0, 1]
+    """
+    memorization(dp)을 사용한 피보나치 수열 처리 함수
+    :param n: 
+    :return: 
+    """
+    if n <= 1:
+        return memo[n]
+    else:
+        for i in range(2, n+1):
+            memo.append(memo[i-1] + memo[i-2])
+        return memo[n]
 
 
-def BFS(g):
-    # global queue, visited_array
-    queue = deque([])
-    visited_array = []
-
-    for i in range(g.SIZE):
-        for j in range(g.SIZE):
-            print(g.graph[i][j], end=' ')
-        print()
-
-    start = 0
-    queue.append(start)
-    visited_array.append(start)
-
-    while queue:
-        current = queue.popleft()
-        for vertex in range(g.SIZE):
-            if g.graph[current][vertex] == 1 and vertex not in visited_array:
-                queue.append(vertex)
-                visited_array.append(vertex)
-
-    for i in visited_array:
-        print(chr(ord('A') + i), end=' -> ')
-    print("END")
+count_recu = 0
+def fibo_recu(n):
+     global count_recu
+     count_recu += 1
+     if n <= 1:
+         return n
+     else:
+         return fibo_recu(n - 1) + fibo_recu(n - 2)
 
 
-g = None
-A, B, C, D, E, F, G, H, I = 0, 1, 2, 3, 4, 5, 6, 7, 8
 
-g1 = Graph(9)
-g1.graph[A][B] = 1; g1.graph[A][C] = 1; g1.graph[A][E] = 1
-g1.graph[B][A] = 1; g1.graph[B][C] = 1; g1.graph[B][D] = 1
-g1.graph[C][A] = 1; g1.graph[C][B] = 1; g1.graph[C][D] = 1; g1.graph[C][E] = 1; g1.graph[C][F] = 1
-g1.graph[D][B] = 1; g1.graph[D][C] = 1
-g1.graph[E][A] = 1; g1.graph[E][C] = 1; g1.graph[E][G] = 1; g1.graph[E][H] = 1
-g1.graph[F][C] = 1
-g1.graph[G][E] = 1; g1.graph[G][I] = 1
-g1.graph[H][E] = 1; g1.graph[H][I] = 1
-g1.graph[I][G] = 1; g1.graph[I][H] = 1
 
-g2 = Graph(4)
-g2.graph[A][C] = 1; g2.graph[A][D] = 1
-g2.graph[B][C] = 1
-g2.graph[C][A] = 1; g2.graph[C][B] = 1; g2.graph[C][D] = 1
-g2.graph[D][A] = 1; g2.graph[C][B] = 1
+def fibo_iter(n):
+    r = list()
+    p1, p2 = 1, 1
+    for _ in range(n):
+        r.append(p1)
+        p1, p2 = p2, p1 + p2
+    return r[-1]
 
-BFS(g1)
-BFS(g2)
+print('피보나치 수 -> 0 1 ', end = '')
+for i in range(1,40):
+    print(f'{i} : {fibo_recu(i)}',end = '')
+    # print(f'{fibo_recu(i)}',end = ' ')
+    # print(f'{i} : {fibo_memo(i)}')  # recursion
+print()
+print(count_recu)
+for i in range(1,40):
+    print(f'{i} : {fibo_memo_recu(i)}')  # recursion
+print(count_memo_recu)
+
