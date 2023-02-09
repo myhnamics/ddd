@@ -1,20 +1,28 @@
-def findInsertIdx(ary, data):
-    findIdx = -1  # 초깃값은 없는 위치로
-    for i in range(0, len(ary)):
-        if (ary[i] < data):
-            findIdx = i
-            break
-    if findIdx == -1:  # 큰 값을 못찾음 == 제일 마지막 위치
-        return len(ary)
-    else:
-        return findIdx
+import random
+count = 0
+## 함수 선언 부분 ##
+def quickSort(ary):
+    global count
+    count += 1
+    n = len(ary)
+    if n <= 1:  # 정렬할 리스트의 개수가 1개 이하면
+        return ary
 
-before_arr = [107, 152,136,128, 176,24,97,13,102,137]
-after_arr = []
-for i in range(len(before_arr)):
-    num_location = findInsertIdx(after_arr,before_arr[i])
-    after_arr.insert(num_location,before_arr[i])
+    pivot = ary[n // 2]  # 기준값을 중간값으로 지정
+    leftAry, rightAry = [], []
 
-print(before_arr)
-print(after_arr)
+    for num in ary:
+        if num < pivot:
+            leftAry.append(num)
+        elif num > pivot:
+            rightAry.append(num)
 
+    return quickSort(leftAry) + [pivot] + quickSort(rightAry)
+
+## 전역 변수 선언 부분 ##
+dataAry = [random.randint(0,200) for _ in range(20)]
+
+## 메인 코드 부분 ##
+print('정렬 전 -->', dataAry)
+dataAry = quickSort(dataAry)
+print('정렬 후 -->', dataAry)
