@@ -1,67 +1,55 @@
-memos = [None for _ in range(100)]
-memos[0] = 0
-memos[1] = 1
+import tkinter as tk
 
-count_memo_recu = 0
+memos = [None for _ in range(100)]  # 전역 리스트
+memos[0], memos[1] = 0, 1
+
+
 def fibo_memo_recu(n):
-    global memos, count_memo_recu
-    count_memo_recu += 1
+    """
+    재귀함수에 Memoization(DP)을 사용한 피보나치 수열 처리 함수
+    :param n:
+    :return:
+    """
+    global memos
+
     if n <= 1:
         return memos[n]
 
-    if memos[n] is not None:
+    if memos[n] is not None:  # 전역 메모리 memos에 이전에 계산한 결과 값이 존재하면
         return memos[n]
 
-    memos[n] = fibo_memo_recu(n-2) + fibo_memo_recu(n-1)
+    memos[n] = fibo_memo_recu(n-2) + fibo_memo_recu(n-1)  # 처음 방문하는 n이면
     return memos[n]
 
 
-
-memo = list() # 전역 변수로 한 번 처리한 결과 값을 저장
-def fibo_memo(n):
-    global memo
-    memo = [0, 1]
-    """
-    memorization(dp)을 사용한 피보나치 수열 처리 함수
-    :param n: 
-    :return: 
-    """
-    if n <= 1:
-        return memo[n]
+def fact_recu(n):
+    if n == 1:
+        return 1
     else:
-        for i in range(2, n+1):
-            memo.append(memo[i-1] + memo[i-2])
-        return memo[n]
+        return n * fact_recu(n-1)
 
 
-count_recu = 0
-def fibo_recu(n):
-     global count_recu
-     count_recu += 1
-     if n <= 1:
-         return n
-     else:
-         return fibo_recu(n - 1) + fibo_recu(n - 2)
+def factorial_input():
+    lbl_results.config(text=f"팩토리얼 계산 출력 결과 : {fact_recu(int(en_num_input.get()))}")
 
 
+def fibonacci_input():
+    lbl_results.config(text=f"피보나치 계산 출력 결과 : {fibo_memo_recu(int(en_num_input.get()))}")
 
 
-def fibo_iter(n):
-    r = list()
-    p1, p2 = 1, 1
-    for _ in range(n):
-        r.append(p1)
-        p1, p2 = p2, p1 + p2
-    return r[-1]
+win = tk.Tk()  # 윈도우 생성
+win.title("Calculator")  # 피보나치, 팩토리얼 계산기
+win.geometry("250x150")  # 가로, 세로 너비 조정
 
-print('피보나치 수 -> 0 1 ', end = '')
-for i in range(1,40):
-    print(f'{i} : {fibo_recu(i)}',end = '')
-    # print(f'{fibo_recu(i)}',end = ' ')
-    # print(f'{i} : {fibo_memo(i)}')  # recursion
-print()
-print(count_recu)
-for i in range(1,40):
-    print(f'{i} : {fibo_memo_recu(i)}')  # recursion
-print(count_memo_recu)
+en_num_input = tk.Entry()  # 텍스트 입력 상자
+lbl_results = tk.Label(text="계산기 출력 결과 : ")  # 레이블, 계산 결과 출력용
+btn_fact = tk.Button(text="팩토리얼", command=factorial_input)  # 팩토리얼 버튼, 이벤트 발생
+btn_fibo = tk.Button(text="피보나치", command=fibonacci_input)  # 피보나치 버튼, 이벤트 발생
 
+# 레이아웃 (grid 또는 place도 사용가능)
+en_num_input.pack()
+lbl_results.pack()
+btn_fact.pack(fill='x')
+btn_fibo.pack(fill='x')
+
+win.mainloop()
